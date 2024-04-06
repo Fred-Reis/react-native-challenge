@@ -11,7 +11,7 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
-import {Welcome, Demo, Home} from '/screens';
+import {Welcome, Demo, Home, Details} from '/screens';
 import {darkTheme, defaultTheme} from '/styles/themes';
 
 const navigationRef = createNavigationContainerRef<AppStackParamList>();
@@ -20,6 +20,7 @@ export type AppStackParamList = {
   Welcome: undefined;
   Demo: undefined;
   Home: undefined;
+  Details: undefined;
   // 🔥 Your screens go here
 };
 
@@ -38,6 +39,7 @@ const AppStack = () => {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Demo" component={Demo} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Details" component={Details} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   );

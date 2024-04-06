@@ -17,9 +17,9 @@ export const RatingsContainer = styled.View`
   gap: 5px;
 `;
 
-export const Data = styled.View`
+export const DataContainer = styled.View`
   margin: 10px;
-  gap: 4px;
+  gap: 2px;
 `;
 
 export const Title = ({children}: TextProps) => {

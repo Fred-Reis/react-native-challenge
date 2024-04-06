@@ -1,12 +1,6 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
-import {
-  Button,
-  ScrollView,
-  // useColorScheme,
-  View,
-  Appearance,
-} from 'react-native';
+import {Button, ScrollView, View, Appearance} from 'react-native';
 import {AppStackScreenProps} from '../../navigators/AppNavigator';
 import {
   Header,
@@ -32,6 +26,7 @@ const Section = ({children, title}: SectionProps) => {
   return (
     <SectionContainer>
       <SectionTitle darkMode={isDarkMode}>{title}</SectionTitle>
+
       <SectionDescription darkMode={isDarkMode}>{children}</SectionDescription>
     </SectionContainer>
   );
@@ -60,6 +55,7 @@ const App: React.FC<WelcomeScreenProps> = ({navigation}) => {
           <Header>
             <SectionTitle darkMode={isDarkMode}>The Movie App</SectionTitle>
           </Header>
+
           <SectionContainer>
             <SectionDescription darkMode={isDarkMode}>
               Welcome to <TextBold>"The Movie App"</TextBold> coding assessment!
@@ -71,6 +67,7 @@ const App: React.FC<WelcomeScreenProps> = ({navigation}) => {
               dive in and showcase your React Native prowess!
             </SectionDescription>
           </SectionContainer>
+
           <Section title="Task 1: Create Home Page">
             <OrderedList
               items={[

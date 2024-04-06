@@ -3,19 +3,21 @@ import {TouchableOpacity, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
-type StartProps = {
+type StarsProps = {
   value: number;
-  setRating: (x: number) => void;
+  setRating?: (x: number) => void;
   onlyView?: boolean;
   size?: number;
+  spacing?: number;
 };
 
 export const StarRating = ({
   value = 0,
-  setRating,
+  setRating = () => {},
   onlyView,
   size = 10,
-}: StartProps) => {
+  spacing = 2,
+}: StarsProps) => {
   let arr = new Array(5).fill('staro');
   arr.fill('star', 0, value);
 
@@ -24,7 +26,7 @@ export const StarRating = ({
   }
 
   return (
-    <View style={{flexDirection: 'row', gap: 2, alignItems: 'center'}}>
+    <View style={{flexDirection: 'row', gap: spacing, alignItems: 'center'}}>
       {arr.map((star, index) => (
         <TouchableOpacity
           disabled={onlyView}

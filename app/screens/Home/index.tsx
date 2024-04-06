@@ -7,14 +7,14 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {AppStackScreenProps} from '/navigators/AppNavigator';
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
 
-import {Card} from 'components/card';
 import {Input} from 'components/Input';
-import {Container, Header} from './home.styles';
 import {HomeList} from 'components/HomeList';
+
+import {Container, Header} from './home.styles';
 
 interface HomeScreenProps extends AppStackScreenProps<'Home'> {}
 
-const Home: React.FC<HomeScreenProps> = ({navigation}) => {
+const Home: React.FC<HomeScreenProps> = () => {
   const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
   const {getColorScheme, setColorScheme} = Appearance;
 
@@ -154,6 +154,7 @@ const Home: React.FC<HomeScreenProps> = ({navigation}) => {
           size={35}
           onPress={() => Alert.alert('bei')}
         />
+
         <Icon
           name="filter"
           size={35}
@@ -161,6 +162,9 @@ const Home: React.FC<HomeScreenProps> = ({navigation}) => {
           style={{marginLeft: 35}}
         />
       </Header>
+
+      <HomeList items={items} />
+
       <HomeList items={items} />
     </Container>
   );
