@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Button, Text} from 'react-native';
-import {useAppDispatch, useAppSelector} from '@/store';
-import {decrement, increment} from '@/store/counterSlice';
+import {useAppDispatch, useAppSelector} from 'store';
+import {increment, decrement} from 'store/counterSlice';
 
 const Counter: React.FC = () => {
   const count = useAppSelector(state => state.counter.value);

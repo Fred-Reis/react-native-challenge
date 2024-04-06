@@ -8,4 +8,12 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['app'],
+      },
+      'babel-module': {},
+    },
+  },
 };

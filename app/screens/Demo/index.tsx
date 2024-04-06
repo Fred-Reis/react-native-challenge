@@ -1,9 +1,10 @@
 import {Button, View} from 'react-native';
 import React from 'react';
-import {AppStackScreenProps} from '../../navigators/AppNavigator';
-import {useSafeAreaInsetsStyle} from '../../utils/useSafeAreaInsetsStyle';
+import {AppStackScreenProps} from '/navigators/AppNavigator';
+import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
 import {Heading, Container} from './demo.styles';
-import Counter from '../../components/Counter';
+import Counter from '/components/Counter';
+import {useTheme} from '@react-navigation/native';
 
 interface DemoScreenProps extends AppStackScreenProps<'Demo'> {}
 
@@ -13,13 +14,15 @@ interface DemoScreenProps extends AppStackScreenProps<'Demo'> {}
 const Demo: React.FC<DemoScreenProps> = ({navigation}) => {
   const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
 
+  const {colors} = useTheme();
+
   const goBack = () => {
     navigation.goBack();
   };
 
   return (
-    <View style={[$containerInsets]}>
-      <Heading>Redux Demo</Heading>
+    <View style={[$containerInsets, {backgroundColor: colors.background}]}>
+      <Heading style={{color: colors.text}}>Redux Demo</Heading>
       <Container>
         <Counter />
       </Container>

@@ -1,7 +1,12 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
-import {Button, ScrollView, useColorScheme, View} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {
+  Button,
+  ScrollView,
+  // useColorScheme,
+  View,
+  Appearance,
+} from 'react-native';
 import {AppStackScreenProps} from '../../navigators/AppNavigator';
 import {
   Header,
@@ -12,6 +17,7 @@ import {
 } from './welcome.styles';
 import {useSafeAreaInsetsStyle} from '../../utils/useSafeAreaInsetsStyle';
 import OrderedList from '../../components/OrderedList';
+import {useTheme} from '@react-navigation/native';
 
 interface WelcomeScreenProps extends AppStackScreenProps<'Welcome'> {}
 type SectionProps = PropsWithChildren<{
@@ -19,7 +25,9 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 const Section = ({children, title}: SectionProps) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {getColorScheme} = Appearance;
+
+  const isDarkMode = getColorScheme() === 'dark';
 
   return (
     <SectionContainer>
@@ -30,11 +38,15 @@ const Section = ({children, title}: SectionProps) => {
 };
 
 const App: React.FC<WelcomeScreenProps> = ({navigation}) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {getColorScheme, setColorScheme} = Appearance;
+  setColorScheme('light');
+  const isDarkMode = getColorScheme() === 'dark';
   const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
 
+  const {colors} = useTheme();
+
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: colors.background,
   };
 
   const navigate = () => {

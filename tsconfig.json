@@ -1,10 +1,22 @@
 {
-    "compilerOptions": {    
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {    
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
+      "baseUrl": ".",
       "paths": {
-        "@/*":["./app/*"]
+        "*": [
+          "./app/*"
+        ],
+        "@app/*": [
+          "./app/*"
+        ],
+        "@app/screens/*": [
+          "./screens/*"
+        ],
+        "@app/components/*": [
+          ".app/components/*"
+        ],
       }
-    },
-  "extends": "@react-native/typescript-config/tsconfig.json"
+    }
 }
