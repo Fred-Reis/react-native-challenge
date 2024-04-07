@@ -2,13 +2,21 @@ import React from 'react';
 import {useColorScheme} from 'react-native';
 
 import {
+  BottomTabScreenProps,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
+
+import {
+  useTheme,
   NavigationContainer,
+  CompositeScreenProps,
+  NavigatorScreenParams,
   createNavigationContainerRef,
 } from '@react-navigation/native';
 
 import {
-  createNativeStackNavigator,
   NativeStackScreenProps,
+  createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 
 import {Welcome, Demo, Home, Details} from '/screens';
@@ -17,15 +25,43 @@ import {darkTheme, defaultTheme} from '/styles/themes';
 const navigationRef = createNavigationContainerRef<AppStackParamList>();
 
 export type AppStackParamList = {
-  Welcome: undefined;
   Demo: undefined;
-  Home: undefined;
+  Welcome: undefined;
   Details: undefined;
-  // 🔥 Your screens go here
+  Home: NavigatorScreenParams<TabStackParamList>;
+};
+
+export type TabStackParamList = {
+  TabHome: undefined;
 };
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+  CompositeScreenProps<
+    NativeStackScreenProps<AppStackParamList, T>,
+    BottomTabScreenProps<TabStackParamList>
+  >;
+
+const Tab = createBottomTabNavigator<TabStackParamList>();
+
+const MyTabs = () => {
+  const {colors} = useTheme();
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          height: 90,
+        },
+      }}>
+      {/* @ts-ignore */}
+      <Tab.Screen name="TabHome" component={Home} />
+    </Tab.Navigator>
+  );
+};
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -38,9 +74,8 @@ const AppStack = () => {
       initialRouteName="Home">
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Demo" component={Demo} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={MyTabs} />
       <Stack.Screen name="Details" component={Details} />
-      {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   );
 };

@@ -1,4 +1,4 @@
-import React, {useState, memo} from 'react';
+import React, {memo} from 'react';
 import {Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
@@ -27,32 +27,37 @@ export type CardProps = {
   item: ItemProps;
 };
 
-export const Card = memo(({item}: CardProps) => {
-  const {poster_path, name, first_air_date, vote_average} = item;
+export const Card = memo(
+  ({item}: CardProps) => {
+    const {poster_path, name, first_air_date, vote_average} = item;
 
-  const {navigate} = useNavigation();
+    const {navigate} = useNavigation();
 
-  function goTo() {
-    navigate('Details', {});
-  }
+    function goTo() {
+      navigate('Details', {});
+    }
 
-  return (
-    <TouchableOpacity style={{marginLeft: 30}} onPress={goTo}>
-      {/* <View style={{flexDirection: 'column', marginLeft: 30}}> */}
-      <CustomImage source={{uri: poster_path}} resizeMode="contain" />
+    return (
+      <TouchableOpacity style={{marginLeft: 30}} onPress={goTo}>
+        {/* <View style={{flexDirection: 'column', marginLeft: 30}}> */}
+        <CustomImage source={{uri: poster_path}} resizeMode="contain" />
 
-      <DataContainer>
-        <Title>{name}</Title>
+        <DataContainer>
+          <Title>{name}</Title>
 
-        <Label>{parseDate(first_air_date)}</Label>
+          <Label>{parseDate(first_air_date)}</Label>
 
-        <RatingsContainer>
-          <RatingsText>{vote_average.toFixed(1)}</RatingsText>
+          <RatingsContainer>
+            <RatingsText>{vote_average.toFixed(1)}</RatingsText>
 
-          <StarRating value={parseRatings(vote_average)} onlyView={true} />
-        </RatingsContainer>
-      </DataContainer>
-      {/* </View> */}
-    </TouchableOpacity>
-  );
-});
+            <StarRating value={parseRatings(vote_average)} onlyView={true} />
+          </RatingsContainer>
+        </DataContainer>
+        {/* </View> */}
+      </TouchableOpacity>
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.item === nextProps.item;
+  },
+);

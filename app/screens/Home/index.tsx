@@ -1,9 +1,8 @@
 import React from 'react';
-import {Alert, Appearance, Text} from 'react-native';
+import {Alert, Appearance, ScrollView, Text} from 'react-native';
 
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
 import {AppStackScreenProps} from '/navigators/AppNavigator';
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
 
@@ -11,6 +10,7 @@ import {Input} from 'components/Input';
 import {HomeList} from 'components/HomeList';
 
 import {Container, Header} from './home.styles';
+import {AvatarList} from 'components/AvatarList';
 
 interface HomeScreenProps extends AppStackScreenProps<'Home'> {}
 
@@ -145,6 +145,89 @@ const Home: React.FC<HomeScreenProps> = () => {
     },
   ];
 
+  const avatarItems = [
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+    {
+      id: '1',
+      profile_path:
+        'https://image.tmdb.org/t/p/w185//fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg',
+    },
+  ];
+
   return (
     <Container style={$containerInsets}>
       <Header>
@@ -163,9 +246,13 @@ const Home: React.FC<HomeScreenProps> = () => {
         />
       </Header>
 
-      <HomeList items={items} />
+      <ScrollView>
+        <AvatarList items={avatarItems} />
 
-      <HomeList items={items} />
+        <HomeList items={items} />
+
+        <HomeList items={items} />
+      </ScrollView>
     </Container>
   );
 };

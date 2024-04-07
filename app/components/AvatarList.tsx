@@ -1,21 +1,17 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 
-import {Card, CardProps, ItemProps} from 'components/Card';
-
-import {DuoColorTitle} from './DuoColorTitle';
+import {Avatar, AvatarProps, ItemProps} from './Avatar';
 
 type ListProps = {
   items: ItemProps[];
 };
 
-const renderItem = ({item}: CardProps) => <Card item={item} />;
+const renderItem = ({item}: AvatarProps) => <Avatar item={item} />;
 
-export const HomeList = ({items}: ListProps) => {
+export const AvatarList = ({items}: ListProps) => {
   return (
     <View style={{marginTop: 20}}>
-      <DuoColorTitle part1="New" part2="Movies" />
-
       <FlatList
         data={items}
         horizontal={true}
@@ -24,7 +20,7 @@ export const HomeList = ({items}: ListProps) => {
         showsHorizontalScrollIndicator={false}
         snapToAlignment="start"
         decelerationRate={'fast'}
-        snapToInterval={177}
+        snapToInterval={120}
         bounces={false}
         style={{
           marginTop: 20,
