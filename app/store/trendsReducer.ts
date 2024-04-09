@@ -4,7 +4,7 @@ const initialState = {
   trends: [],
 };
 
-export const listSlice = createSlice({
+export const trendsSlice = createSlice({
   name: 'trends',
   initialState: initialState,
   reducers: {
@@ -15,5 +15,5 @@ export const listSlice = createSlice({
   },
 });
 
-export const {addTrending} = listSlice.actions;
-export default listSlice.reducer;
+export const {addTrending} = trendsSlice.actions;
+export default trendsSlice.reducer;

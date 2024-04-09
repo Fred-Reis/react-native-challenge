@@ -1,10 +1,10 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React from 'react';
+import {TouchableOpacity} from 'react-native';
 
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Octicons';
 
 import {Container, CustomInput} from './input.styles';
-import {TouchableOpacity} from 'react-native';
 
 type Props = {
   placeholder: string;

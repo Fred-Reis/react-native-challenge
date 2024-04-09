@@ -2,12 +2,13 @@ import React from 'react';
 import {FlatList, View} from 'react-native';
 
 import {DuoColorTitle} from './DuoColorTitle';
-import {Avatar, AvatarProps, ItemProps} from './Avatar';
+import {Avatar, AvatarProps} from './Avatar';
+import {PersonProps} from 'services/queries/types';
 
 type ListProps = {
+  items: PersonProps[];
   titleChunk_1: string;
   titleChunk_2: string;
-  items: ItemProps[];
 };
 
 const renderItem = ({item}: AvatarProps) => <Avatar item={item} />;
@@ -21,7 +22,7 @@ export const AvatarList = ({items, titleChunk_1, titleChunk_2}: ListProps) => {
         data={items}
         horizontal={true}
         renderItem={renderItem}
-        keyExtractor={item => item.id!}
+        keyExtractor={item => String(item?.id)!}
         showsHorizontalScrollIndicator={false}
         snapToAlignment="start"
         decelerationRate={'fast'}

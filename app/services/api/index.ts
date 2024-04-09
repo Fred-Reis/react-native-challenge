@@ -3,7 +3,7 @@ import api from './setup';
 
 export const URLS = {
   MULTI_SEARCH:
-    '/search/multi?query=:name&include_adult=false&language=en-US&page=1',
+    '/search/:type?query=:name&include_adult=false&language=en-US&page=1',
   GET_GENRE: '/genre/:genre/list?language=en',
   ALL_TRENDINGS: '/trending/all/:time_window',
 
@@ -12,8 +12,16 @@ export const URLS = {
   PEOPLE_BY_NAME: '/search/people?q=:name',
 };
 
-const multiSearch = (_name: string) => {
-  return api.get(URLS.MULTI_SEARCH.replace(':name', encodeURI(_name)));
+const multiSearch = (
+  _type: 'person' | 'tv' | 'multi' | 'movie',
+  _name: string,
+) => {
+  return api.get(
+    URLS.MULTI_SEARCH.replace(':type', _type).replace(
+      ':name',
+      encodeURI(_name),
+    ),
+  );
 };
 
 const getGenreByType = (_genre: string) => {

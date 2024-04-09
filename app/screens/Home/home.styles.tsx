@@ -23,3 +23,15 @@ export const Header = styled.View`
   flex-direction: row;
   align-items: center;
 `;
+
+export const ScrollList = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    paddingEnd: 20,
+  },
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+})`
+  margin-top: 30px;
+  height: 50px;
+  margin-bottom: 10px;
+`;

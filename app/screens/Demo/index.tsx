@@ -3,7 +3,7 @@ import React from 'react';
 import {AppStackScreenProps} from 'navigators/navigator.types';
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
 import {Heading, Container} from './demo.styles';
-import Counter from '/components/Counter';
+// import Counter from '/components/Counter';
 import {useTheme} from '@react-navigation/native';
 
 interface DemoScreenProps extends AppStackScreenProps<'Demo'> {}
@@ -23,9 +23,7 @@ const Demo: React.FC<DemoScreenProps> = ({navigation}) => {
   return (
     <View style={[$containerInsets, {backgroundColor: colors.background}]}>
       <Heading style={{color: colors.text}}>Redux Demo</Heading>
-      <Container>
-        <Counter />
-      </Container>
+      <Container>{/* <Counter /> */}</Container>
       <Button title="Go Back" onPress={goBack} />
     </View>
   );

@@ -1,15 +1,18 @@
 import React, {memo} from 'react';
-import {Image, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-
-export type ItemProps = {
-  id?: string;
-  profile_path: string;
-};
+import {parsePath} from 'utils/parseImagePaths';
+import {PersonProps} from 'services/queries/types';
+import {AvatarImage, Title} from './avatar.styles';
 
 export type AvatarProps = {
-  item: ItemProps;
+  item: PersonProps;
 };
 
 export const Avatar = memo(
@@ -20,17 +23,14 @@ export const Avatar = memo(
       // navigate('Details', {});
     }
 
+    const profileImage = item.profile_path
+      ? parsePath({path: item.profile_path, size: 'w185'})
+      : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1';
+
     return (
       <TouchableOpacity style={{marginLeft: 30}} onPress={goTo}>
-        <Image
-          style={{
-            height: 90,
-            width: 90,
-            borderRadius: 45,
-          }}
-          source={{uri: item.profile_path}}
-          resizeMode="cover"
-        />
+        <AvatarImage source={{uri: profileImage}} resizeMode="cover" />
+        <Title>{item.name}</Title>
       </TouchableOpacity>
     );
   },
