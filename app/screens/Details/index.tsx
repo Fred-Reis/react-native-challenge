@@ -1,28 +1,32 @@
 import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native';
 
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {StarRating} from 'components/StarRating';
-import {AppStackScreenProps} from '/navigators/AppNavigator';
+import {AppStackScreenProps} from 'navigators/navigator.types';
 
 import {onShare} from 'utils/shareMessage';
 import {parseRatings} from 'utils/cardFunctions';
 
 import * as Styles from './details.styles';
 import {BackButton} from 'components/BackButton';
+import {genres as allGenres} from 'utils/genresAndGenders';
 
-interface DetailsScreenProps extends AppStackScreenProps<'Details'> {}
-const backdrop_path =
-  'https://image.tmdb.org/t/p/w1280/6LWy0jvMpmjoS9fojNgHIKoWL05.jpg';
+interface DetailsScreenProps extends AppStackScreenProps<'Details'> {
+  backdrop_path: string;
+  overview: string;
+  homepage?: string;
+  title: string;
+  ratings?: number;
+  genres: number[];
+  date: number;
+  type: string;
+}
 
-const overview =
-  "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.";
-
-const homepage = 'http://www.foxmovies.com/movies/fight-club';
-
-const BackDrop = () => {
+// @ts-ignore
+const BackDrop = ({backdrop_path}: string) => {
   return (
     <Styles.BackDropContainer>
       <Styles.BackDropImage source={{uri: backdrop_path}} resizeMode="cover" />
@@ -32,8 +36,19 @@ const BackDrop = () => {
   );
 };
 
-const Details: React.FC<DetailsScreenProps> = () => {
-  const [rating, setRating] = useState(9.7);
+const Details: React.FC<DetailsScreenProps> = ({route}) => {
+  const {
+    title,
+    backdrop_path,
+    homepage,
+    overview,
+    ratings = 0.0,
+    genres,
+    date,
+    type,
+  } = route.params;
+
+  const [rating, setRating] = useState(ratings);
 
   const {colors} = useTheme();
 
@@ -45,10 +60,15 @@ const Details: React.FC<DetailsScreenProps> = () => {
   }
 
   function handleShare() {
-    onShare(homepage);
+    onShare(homepage || '');
   }
 
-  const labels = ['2023', 'Biography', 'Drama', 'History', 'blabla']
+  const labels = [
+    date,
+    ...allGenres[type]
+      .filter((g: {id: number}) => genres.includes(g.id))
+      .map((e: {name: any}) => e.name),
+  ]
     .slice(0, 4)
     .map((e, i, arr) => (
       <Styles.Label>{i === arr.length - 1 ? e : `${e} \u2502 `}</Styles.Label>
@@ -58,7 +78,7 @@ const Details: React.FC<DetailsScreenProps> = () => {
     <Styles.Container>
       <BackButton />
       <Styles.TitleContainer>
-        <Styles.Title>Game of Thrones</Styles.Title>
+        <Styles.Title>{title}</Styles.Title>
 
         <Styles.LabelDataContainer>{labels}</Styles.LabelDataContainer>
       </Styles.TitleContainer>
@@ -76,9 +96,11 @@ const Details: React.FC<DetailsScreenProps> = () => {
         </Styles.RatingsContainer>
 
         <Styles.IconsContainer>
-          <TouchableOpacity onPress={handleShare}>
-            <Icon name="share-social-outline" size={25} color={colors.text} />
-          </TouchableOpacity>
+          {homepage && (
+            <TouchableOpacity onPress={handleShare}>
+              <Icon name="share-social-outline" size={25} color={colors.text} />
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity>
             <Icon name="heart-outline" size={25} color={colors.text} />
@@ -86,9 +108,14 @@ const Details: React.FC<DetailsScreenProps> = () => {
         </Styles.IconsContainer>
       </Styles.InteractionContainer>
 
-      <Styles.Overview>{overview}</Styles.Overview>
+      <Styles.Scroll>
+        <Styles.Overview>
+          {overview || 'Sorry, no overview yet'}
+        </Styles.Overview>
+      </Styles.Scroll>
 
-      <BackDrop />
+      {/* @ts-ignore */}
+      <BackDrop backdrop_path={backdrop_path} />
     </Styles.Container>
   );
 };

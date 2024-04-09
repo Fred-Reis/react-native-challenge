@@ -29,6 +29,7 @@ export const Title = ({children}: TextProps) => {
     font-size: ${fonts.M};
     font-weight: bold;
     color: ${colors.text};
+    max-width: 120px;
   `;
 
   return <Component>{children}</Component>;

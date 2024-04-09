@@ -29,6 +29,8 @@ export const Title = ({children}: Props) => {
   const {colors, fonts} = useTheme();
 
   const Component = styled.Text`
+    margin: 0 20px;
+
     font-size: 40px;
     font-weight: bold;
 
@@ -137,3 +139,12 @@ export const Overview = ({children}: Props) => {
 
   return <Component>{children}</Component>;
 };
+
+export const Scroll = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    paddingBottom: 50,
+  },
+})`
+  z-index: 1;
+  margin-bottom: 20px;
+`;

@@ -1,16 +1,17 @@
-import React, {PropsWithChildren} from 'react';
-import {TextInputProps} from 'react-native';
+import React, {PropsWithChildren, forwardRef} from 'react';
+import {TextInput, TextInputProps} from 'react-native';
 
 import styled from 'styled-components/native';
 import {useTheme} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 type ContainerProps = PropsWithChildren<{}>;
 
-export const CustomInput = ({...style}: TextInputProps) => {
+interface Props extends React.RefAttributes<TextInput>, TextInputProps {}
+
+export const CustomInput = ({...rest}: Props) => {
   const {colors, fonts} = useTheme();
 
-  const Component = styled.TextInput.attrs({
+  const Component = styled(TextInput).attrs({
     placeholderTextColor: colors.inputPlaceholderText,
   })`
     flex: 1;
@@ -20,7 +21,7 @@ export const CustomInput = ({...style}: TextInputProps) => {
     color: ${colors.text};
   `;
 
-  return <Component {...style} />;
+  return <Component {...rest} />;
 };
 
 export const Container = ({children}: ContainerProps) => {

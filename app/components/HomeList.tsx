@@ -6,26 +6,28 @@ import {Card, CardProps, ItemProps} from 'components/Card';
 import {DuoColorTitle} from './DuoColorTitle';
 
 type ListProps = {
+  titleChunk_1: string;
+  titleChunk_2: string;
   items: ItemProps[];
 };
 
 const renderItem = ({item}: CardProps) => <Card item={item} />;
 
-export const HomeList = ({items}: ListProps) => {
+export const HomeList = ({items, titleChunk_1, titleChunk_2}: ListProps) => {
   return (
     <View style={{marginTop: 20}}>
-      <DuoColorTitle part1="New" part2="Movies" />
+      <DuoColorTitle chunk1={titleChunk_1} chunk2={titleChunk_2} />
 
       <FlatList
         data={items}
         horizontal={true}
         renderItem={renderItem}
-        keyExtractor={item => item.id!}
+        keyExtractor={item => String(item?.id)!}
         showsHorizontalScrollIndicator={false}
         snapToAlignment="start"
         decelerationRate={'fast'}
         snapToInterval={177}
-        bounces={false}
+        getItemLayout={(data, index) => ({length: 146.5, offset: 220, index})}
         style={{
           marginTop: 20,
         }}

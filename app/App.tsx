@@ -11,7 +11,8 @@ import {
 
 import {store} from './store';
 
-import {AppNavigator} from './navigators/AppNavigator';
+import {AppNavigator} from './navigators';
+import {StatusBar} from 'react-native';
 
 const App: React.FC = () => {
   const onNavigationStateChange = () => {

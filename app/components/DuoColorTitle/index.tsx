@@ -3,15 +3,15 @@ import React from 'react';
 import {Container, RedText, DinamicText} from './title.styles';
 
 type TitleProps = {
-  part1: string;
-  part2: string;
+  chunk1: string;
+  chunk2: string;
 };
 
-export const DuoColorTitle = ({part1, part2}: TitleProps) => {
+export const DuoColorTitle = ({chunk1, chunk2}: TitleProps) => {
   return (
     <Container>
-      <RedText>{part1}</RedText>
-      <DinamicText>{part2}</DinamicText>
+      <RedText>{chunk1}</RedText>
+      <DinamicText>{chunk2}</DinamicText>
     </Container>
   );
 };

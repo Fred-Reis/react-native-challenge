@@ -1,6 +1,6 @@
 import {Button, View} from 'react-native';
 import React from 'react';
-import {AppStackScreenProps} from '/navigators/AppNavigator';
+import {AppStackScreenProps} from 'navigators/navigator.types';
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
 import {Heading, Container} from './demo.styles';
 import Counter from '/components/Counter';

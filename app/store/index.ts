@@ -1,13 +1,23 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import counterReducer from './counterSlice';
+import trendsReducer from './listsReducer';
+
+import {trendingLists} from './api';
+import {setupListeners} from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    // add other state here
+    trends: trendsReducer,
+    [trendingLists.reducerPath]: trendingLists.reducer,
   },
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(trendingLists.middleware),
 });
+
+setupListeners(store.dispatch);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
