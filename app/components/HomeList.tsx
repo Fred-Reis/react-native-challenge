@@ -1,14 +1,15 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 
-import {Card, CardProps, ItemProps} from 'components/Card';
+import {Card, CardProps} from 'components/Card';
 
 import {DuoColorTitle} from './DuoColorTitle';
+import {MoviesProps, TvShowProps} from 'services/queries/types';
 
 type ListProps = {
   titleChunk_1: string;
   titleChunk_2: string;
-  items: ItemProps[];
+  items: MoviesProps[] & TvShowProps[];
 };
 
 const renderItem = ({item}: CardProps) => <Card item={item} />;

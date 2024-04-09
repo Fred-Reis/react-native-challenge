@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+
+import {addTrending} from './trendsReducer';
 import {API_TOKEN} from 'react-native-dotenv';
-import {addTrending} from './listsReducer';
 
 export const trendingLists = createApi({
   reducerPath: 'getTrendsApi',

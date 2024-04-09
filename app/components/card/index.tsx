@@ -6,33 +6,20 @@ import {useNavigation} from '@react-navigation/native';
 import {StarRating} from 'components/StarRating';
 import {parseDate, parseRatings} from 'utils/cardFunctions';
 
-import {
-  CustomImage,
-  Label,
-  RatingsContainer,
-  RatingsText,
-  Title,
-  DataContainer,
-} from './card.styles';
 import {parsePath} from 'utils/parseImagePaths';
+import {MoviesProps, TvShowProps} from 'services/queries/types';
 
-export type ItemProps = {
-  id?: number;
-  title?: string;
-  name?: string;
-  vote_average?: number;
-  first_air_date?: string;
-  release_date?: string;
-  poster_path?: string;
-  backdrop_path?: string;
-  media_type: string;
-  overview: string;
-  homepage?: string;
-  genre_ids: number[];
-};
+import {
+  Label,
+  Title,
+  RatingsText,
+  CustomImage,
+  DataContainer,
+  RatingsContainer,
+} from './card.styles';
 
 export type CardProps = {
-  item: ItemProps;
+  item: TvShowProps & MoviesProps;
 };
 
 export const Card = memo(
@@ -48,7 +35,6 @@ export const Card = memo(
       release_date,
       title,
       overview,
-      homepage,
       genre_ids,
     } = item;
 
@@ -73,7 +59,6 @@ export const Card = memo(
       navigate('Details', {
         backdrop_path: backdrop,
         overview: overview,
-        homepage: homepage,
         title: parsedTitle!,
         ratings: vote_average,
         genres: genre_ids,

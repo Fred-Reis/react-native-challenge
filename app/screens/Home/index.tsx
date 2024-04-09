@@ -1,49 +1,47 @@
 import React, {useEffect, useRef, useState} from 'react';
+
 import {Appearance, Button, ScrollView, Text, View} from 'react-native';
 
-import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {AppStackScreenProps} from 'navigators/navigator.types';
+import {useTheme} from '@react-navigation/native';
+
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
-
-import {Input} from 'components/Input';
-import {HomeList} from 'components/HomeList';
-import {AvatarList} from 'components/AvatarList';
-
-import {API} from 'api';
+import {AppStackScreenProps} from 'navigators/navigator.types';
+import useFetchAllTrends from 'services/queries/trendingLists';
 import {groupBy} from 'utils/groupBy';
-import {useAppDispatch, useAppSelector} from 'store';
+import {API} from 'services/api';
 
+import {AvatarList} from 'components/AvatarList';
+import {HomeList} from 'components/HomeList';
+import {Input} from 'components/Input';
+
+import useTrendingList from 'zustandStore/useTrendingList';
 import {Container, Header} from './home.styles';
-import {trendingLists, useGetAlltrendsQuery} from 'store/api';
-import {addTrending} from 'store/listsReducer';
 
 interface HomeScreenProps extends AppStackScreenProps<'Home'> {}
 
 const Home: React.FC<HomeScreenProps> = () => {
-  const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
-  const {setColorScheme} = Appearance;
-
-  setColorScheme('dark');
-
   const [tvShowsList, setTvShowsList] = useState([]);
   const [moviesList, setMoviesList] = useState([]);
   const [peopleList, setPeopleList] = useState([]);
 
   const inputRef = useRef('');
 
-  const {data, isLoading} = useGetAlltrendsQuery('day');
+  const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
 
-  const {trends} = useAppSelector(state => state.trends);
-  const dispatch = useAppDispatch();
+  const {trendingList, setTrendingList} = useTrendingList();
+
+  const {data, isLoading} = useFetchAllTrends('week');
+
+  const {setColorScheme} = Appearance;
+
+  setColorScheme('dark');
 
   function getTrends(): void {
-    console.log(data);
-
     if (!isLoading) {
-      const people = groupBy(data.results, 'media_type')['people'];
-      const movies = groupBy(data.results, 'media_type')['movie'];
-      const tv = groupBy(data.results, 'media_type')['tv'];
+      const people = groupBy(trendingList, 'media_type')['people'];
+      const movies = groupBy(trendingList, 'media_type')['movie'];
+      const tv = groupBy(trendingList, 'media_type')['tv'];
 
       setMoviesList(movies);
       setPeopleList(people);
@@ -51,21 +49,15 @@ const Home: React.FC<HomeScreenProps> = () => {
     }
   }
 
-  function clean() {
-    // dispatch(
-    //   trendingLists.util.updateQueryData(
-    //     'getAlltrends',
-    //     undefined,
-    //     (trending: never[]) => (trending = []),
-    //   ),
-    // );
-    dispatch(trendingLists.util.resetApiState());
-    getTrends();
-  }
-
   useEffect(() => {
-    getTrends();
-  }, [isLoading]);
+    if (data) {
+      // @ts-ignore
+      const {results} = data;
+
+      setTrendingList(results);
+      getTrends();
+    }
+  }, [data, trendingList]);
 
   const {colors} = useTheme();
 
@@ -112,7 +104,7 @@ const Home: React.FC<HomeScreenProps> = () => {
           </Header>
 
           <Button title="press" onPress={getTrends} />
-          <Button title="clean" onPress={clean} />
+          {/* <Button title="clean" onPress={clean} /> */}
 
           <ScrollView
             contentContainerStyle={{

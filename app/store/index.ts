@@ -1,10 +1,10 @@
-import {configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {setupListeners} from '@reduxjs/toolkit/query';
+import {configureStore} from '@reduxjs/toolkit';
 import counterReducer from './counterSlice';
-import trendsReducer from './listsReducer';
+import trendsReducer from './trendsReducer';
 
 import {trendingLists} from './api';
-import {setupListeners} from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {

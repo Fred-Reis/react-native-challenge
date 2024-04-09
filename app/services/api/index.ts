@@ -1,3 +1,4 @@
+import {MoviesProps, TvShowProps} from 'services/queries/types';
 import api from './setup';
 
 export const URLS = {
@@ -20,7 +21,9 @@ const getGenreByType = (_genre: string) => {
 };
 
 const getAllTrendings = (_time_window: 'day' | 'week') => {
-  return api.get(URLS.ALL_TRENDINGS.replace(':time_window', _time_window));
+  return api.get<TvShowProps[] | MoviesProps[]>(
+    URLS.ALL_TRENDINGS.replace(':time_window', _time_window),
+  );
 };
 
 const showsByActor = (_id: string) => {
