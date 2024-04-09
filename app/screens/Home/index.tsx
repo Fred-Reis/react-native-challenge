@@ -29,7 +29,7 @@ const Home: React.FC<HomeScreenProps> = () => {
 
   const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
 
-  const {trendingList, setTrendingList} = useTrendingList();
+  const {trendingList, setTrendingList, ratedList} = useTrendingList();
 
   const {data, isLoading} = useFetchAllTrends('week');
 
@@ -55,9 +55,11 @@ const Home: React.FC<HomeScreenProps> = () => {
       const {results} = data;
 
       setTrendingList(results);
-      getTrends();
     }
-  }, [data, trendingList]);
+  }, [data]);
+
+  useEffect(() => getTrends(), [trendingList]);
+  useEffect(() => console.log(ratedList), [ratedList]);
 
   const {colors} = useTheme();
 

@@ -1,29 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
 
-import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useTheme} from '@react-navigation/native';
 
 import {StarRating} from 'components/StarRating';
-import {AppStackScreenProps} from 'navigators/navigator.types';
+import {BackButton} from 'components/BackButton';
 
-import {onShare} from 'utils/shareMessage';
+import {AppStackScreenProps} from 'navigators/navigator.types';
+import useTrendingList from 'zustandStore/useTrendingList';
+import {genres as allGenres} from 'utils/genresAndGenders';
 import {parseRatings} from 'utils/cardFunctions';
+import {onShare} from 'utils/shareMessage';
 
 import * as Styles from './details.styles';
-import {BackButton} from 'components/BackButton';
-import {genres as allGenres} from 'utils/genresAndGenders';
 
-interface DetailsScreenProps extends AppStackScreenProps<'Details'> {
-  backdrop_path: string;
-  overview: string;
-  homepage?: string;
-  title: string;
-  ratings?: number;
-  genres: number[];
-  date: number;
-  type: string;
-}
+interface DetailsScreenProps extends AppStackScreenProps<'Details'> {}
 
 // @ts-ignore
 const BackDrop = ({backdrop_path}: string) => {
@@ -38,17 +30,20 @@ const BackDrop = ({backdrop_path}: string) => {
 
 const Details: React.FC<DetailsScreenProps> = ({route}) => {
   const {
-    title,
     backdrop_path,
+    ratings = 0.0,
     homepage,
     overview,
-    ratings = 0.0,
     genres,
+    title,
     date,
     type,
+    id,
   } = route.params;
 
   const [rating, setRating] = useState(ratings);
+
+  const {ratingTrendingList, trendingList} = useTrendingList();
 
   const {colors} = useTheme();
 
@@ -57,6 +52,9 @@ const Details: React.FC<DetailsScreenProps> = ({route}) => {
     setRating(prevState =>
       value === 1 && parseRatings(prevState) === value ? 0 : newRating,
     );
+    const rating =
+      value === 1 && parseRatings(ratings) === value ? 0 : newRating;
+    ratingTrendingList(id, rating);
   }
 
   function handleShare() {

@@ -25,17 +25,17 @@ export type CardProps = {
 export const Card = memo(
   ({item}: CardProps) => {
     const {
-      id,
-      poster_path,
       backdrop_path,
-      name,
       first_air_date,
       vote_average,
-      media_type,
       release_date,
-      title,
-      overview,
+      poster_path,
+      media_type,
       genre_ids,
+      overview,
+      title,
+      name,
+      id,
     } = item;
 
     const {navigate} = useNavigation();
@@ -64,6 +64,7 @@ export const Card = memo(
         genres: genre_ids,
         date: parsedDate,
         type: media_type,
+        id: id,
       });
     }
 

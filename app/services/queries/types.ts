@@ -32,3 +32,15 @@ export interface MoviesProps {
   vote_average: number;
   vote_count: number;
 }
+
+export interface DetailsProps {
+  backdrop_path: string;
+  overview: string;
+  homepage?: string;
+  title: string;
+  ratings?: number;
+  genres: number[];
+  date: number;
+  type: string;
+  id: number;
+}
