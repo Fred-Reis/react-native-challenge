@@ -85,6 +85,7 @@ const Home: React.FC = () => {
   }
 
   async function handleSearch() {
+    const isMulti = ['all', 'trending'].includes(activeList);
     const type: any = ['all', 'trending'].includes(activeList)
       ? 'multi'
       : activeList;
@@ -93,7 +94,26 @@ const Home: React.FC = () => {
 
       const {results} = data;
 
-      setData(results);
+      /**
+       *
+       *  The API has changed while this project
+       *  was being done
+       *  so I had to improvise, Sorry
+       *
+       */
+
+      const mapStates: any = {
+        movie: setMoviesList,
+        person: setPeopleList,
+        tv: setTvShowsList,
+      };
+
+      if (isMulti) {
+        setData(results);
+      } else {
+        setAllList(results);
+        mapStates[type](results);
+      }
       setAllList(results);
     } catch (error) {
       console.error(error);
@@ -108,7 +128,7 @@ const Home: React.FC = () => {
       const {results} = data;
 
       setAllList(results);
-      setData(allList);
+      setData(results);
     }
   }, [data]);
 
