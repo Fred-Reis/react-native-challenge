@@ -28,7 +28,7 @@ export const HomeList = ({items, titleChunk_1, titleChunk_2}: ListProps) => {
         snapToAlignment="start"
         decelerationRate={'fast'}
         snapToInterval={177}
-        getItemLayout={(data, index) => ({length: 146.5, offset: 220, index})}
+        // getItemLayout={(data, index) => ({length: 146.5, offset: 220, index})}
         style={{
           marginTop: 20,
         }}

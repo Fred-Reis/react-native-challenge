@@ -23,9 +23,10 @@ export const Avatar = memo(
       // navigate('Details', {});
     }
 
-    const profileImage = item.profile_path
-      ? parsePath({path: item.profile_path, size: 'w185'})
-      : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1';
+    const profileImage =
+      item.profile_path !== null
+        ? parsePath({path: item.profile_path, size: 'w185'})
+        : 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1';
 
     return (
       <TouchableOpacity style={{marginLeft: 30}} onPress={goTo}>

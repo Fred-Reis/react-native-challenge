@@ -17,7 +17,7 @@ export interface TvShowProps {
 
 export interface MoviesProps {
   adult: boolean;
-  backdrop_path?: string;
+  backdrop_path?: string | null;
   id: number;
   title?: string;
   original_language: string;
@@ -34,7 +34,7 @@ export interface MoviesProps {
 }
 
 export interface DetailsProps {
-  backdrop_path: string;
+  backdrop_path?: string | null;
   overview: string;
   homepage?: string;
   title: string;

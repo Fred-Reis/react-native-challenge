@@ -15,10 +15,12 @@ export type AppStackParamList = {
   Demo: undefined;
   Welcome: undefined;
   Details: DetailsProps;
+  Stared: undefined;
   Home: NavigatorScreenParams<TabStackParamList>;
 };
 
 export type TabStackParamList = {
+  Stared: undefined;
   TabHome: undefined;
 };
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {Appearance, Image, ScrollView, Text, View} from 'react-native';
+import {RefreshControl, ScrollView, View} from 'react-native';
 // import LottieView from 'lottie-react-native';
 
 import {MoviesProps, PersonProps, TvShowProps} from 'services/queries/types';
@@ -18,10 +18,12 @@ import {Input} from 'components/Input';
 import {Empty} from 'components/EmptyContent';
 
 import {Container, Header, ScrollList} from './home.styles';
+import {Loading} from 'components/Loading';
 
 interface HomeScreenProps extends AppStackScreenProps<'Home'> {}
 
-const Home: React.FC<HomeScreenProps> = () => {
+const Home: React.FC = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [tvShowsList, setTvShowsList] = useState<any[]>([]);
   const [moviesList, setMoviesList] = useState<any[]>([]);
   const [peopleList, setPeopleList] = useState<any[]>([]);
@@ -33,15 +35,11 @@ const Home: React.FC<HomeScreenProps> = () => {
 
   const $containerInsets = useSafeAreaInsetsStyle(['top', 'bottom']);
 
-  const {trendingList, setTrendingList, ratedList} = useTrendingList();
+  const {allList, setAllList} = useTrendingList();
 
   const {data, isLoading} = useFetchAllTrends('week');
 
-  const {setColorScheme} = Appearance;
-
   const emptyLists = !tvShowsList && !moviesList && !peopleList && !isLoading;
-
-  setColorScheme('dark');
 
   function setData(data: TvShowProps[] & MoviesProps[] & PersonProps[]) {
     const people = groupBy(data, 'media_type')['person'];
@@ -53,9 +51,18 @@ const Home: React.FC<HomeScreenProps> = () => {
     setTvShowsList(tv);
   }
 
-  function getTrends(): void {
+  function getAll(): void {
     if (!isLoading) {
-      setData(trendingList);
+      setData(allList);
+    }
+  }
+
+  function getTrending(): void {
+    if (!isLoading) {
+      // @ts-ignore
+      const {results} = data;
+
+      setData(results);
     }
   }
 
@@ -69,6 +76,14 @@ const Home: React.FC<HomeScreenProps> = () => {
     return shouldShow;
   }
 
+  function onRefresh() {
+    setRefreshing(true);
+    setTimeout(() => {
+      getAll();
+      setRefreshing(false);
+    }, 200);
+  }
+
   async function handleSearch() {
     const type: any = ['all', 'trending'].includes(activeList)
       ? 'multi'
@@ -78,9 +93,8 @@ const Home: React.FC<HomeScreenProps> = () => {
 
       const {results} = data;
 
-      // console.log(results);
-
       setData(results);
+      setAllList(results);
     } catch (error) {
       console.error(error);
     }
@@ -93,27 +107,15 @@ const Home: React.FC<HomeScreenProps> = () => {
       // @ts-ignore
       const {results} = data;
 
-      setTrendingList(results);
+      setAllList(results);
+      setData(allList);
     }
   }, [data]);
-
-  // useEffect(() => console.log('EMPTY', emptyLists));
-
-  // TODO evitar trend list como default
-  // ou filtrar favoritos implementar o rating direto na home
-  // definir se terá um storage só pra favoritos
-
-  useEffect(() => getTrends(), [trendingList]);
 
   return (
     <>
       {isLoading ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}></View>
+        <Loading />
       ) : (
         <Container style={$containerInsets}>
           <Header>
@@ -129,12 +131,12 @@ const Home: React.FC<HomeScreenProps> = () => {
           <ScrollList>
             <CustomButton
               isActive={activeList === 'all'}
-              onSubmit={() => setActiveList('all')}
+              onSubmit={() => [setActiveList('all'), getAll()]}
               title="All"
             />
             <CustomButton
               isActive={activeList === 'trending'}
-              onSubmit={() => [setActiveList('trending'), getTrends()]}
+              onSubmit={() => [setActiveList('trending'), getTrending()]}
               title="Trendings"
             />
             <CustomButton
@@ -155,6 +157,9 @@ const Home: React.FC<HomeScreenProps> = () => {
           </ScrollList>
 
           <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             contentContainerStyle={{
               paddingBottom: 150,
             }}>

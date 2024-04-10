@@ -19,7 +19,7 @@ export const CustomTabIcon = memo(({icon, focused, text}: Props) => {
       <Icon
         name={icon}
         color={focused ? colors.primary : colors.text}
-        size={25}
+        size={30}
       />
 
       <IconText focused={focused}>{text}</IconText>

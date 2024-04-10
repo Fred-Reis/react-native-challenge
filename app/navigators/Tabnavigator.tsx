@@ -3,9 +3,10 @@ import React from 'react';
 import {useTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {Details, Home} from 'screens';
+import {Stared, Home} from 'screens';
 import {TabStackParamList} from './navigator.types';
 import {CustomTabIcon} from './components/CustomTabIcon';
+import {View} from 'react-native';
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
@@ -17,10 +18,10 @@ export const MyTabs = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
 
         tabBarStyle: {
           backgroundColor: colors.inputBackground,
-          // borderRadius: 40,
           shadowColor: colors.inputBackground,
           borderTopColor: colors.inputBackground,
           borderTopWidth: 1,
@@ -29,33 +30,37 @@ export const MyTabs = () => {
             height: -5,
           },
           shadowOpacity: 0.7,
-          // shadowRadius: 3.5,
           elevation: 4,
-          height: 90,
+          height: 100,
         },
       }}>
       <Tab.Screen
         name="TabHome"
-        // @ts-ignore
         component={Home}
         options={{
           tabBarIcon: ({focused}) => (
             <CustomTabIcon focused={focused} icon="home" text="Home" />
           ),
         }}
+        // options={{
+        //   tabBarIcon: () => (
+        //     <View style={{display: 'none', position: 'absolute'}} />
+        //   ),
+        //   // tabBarIcon: ({focused}) => (
+        //   //   <CustomTabIcon focused={focused} icon="home" text="Home" />
+        //   // ),
+        // }}
       />
-      {/* <Tab.Screen
-        // @ts-ignore
-        name="Details"
-
-        component={Details}
+      <Tab.Screen
+        name="Stared"
+        component={Stared}
         options={{
-          tabBarStyle: {display: 'none'},
+          // tabBarStyle: {display: 'none'},
           tabBarIcon: ({focused}) => (
-            <CustomTabIcon focused={focused} icon="home" text="Home" />
+            <CustomTabIcon focused={focused} icon="star" text="Stared" />
           ),
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };

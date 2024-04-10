@@ -24,52 +24,56 @@ export type CardProps = {
 
 export const Card = memo(
   ({item}: CardProps) => {
-    const {
-      backdrop_path,
-      first_air_date,
-      vote_average,
-      release_date,
-      poster_path,
-      media_type,
-      genre_ids,
-      overview,
-      title,
-      name,
-      id,
-    } = item;
+    // const {
+    //   backdrop_path = '',
+    //   first_air_date,
+    //   vote_average,
+    //   release_date,
+    //   poster_path,
+    //   media_type,
+    //   genre_ids,
+    //   overview,
+    //   title,
+    //   name,
+    //   id,
+    // } = item;
 
     const {navigate} = useNavigation();
 
-    const isMovie = media_type === 'movie';
+    const isMovie = item?.media_type === 'movie';
 
-    const parsedDate = parseDate(`${isMovie ? release_date : first_air_date}`);
-    const parsedTitle = isMovie ? title : name;
+    const parsedDate = parseDate(
+      `${isMovie ? item?.release_date : item?.first_air_date}`,
+    );
+    const parsedTitle = isMovie ? item?.title : item?.name;
 
     const defaultPoster =
       'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie.jpg';
 
-    const poster = poster_path
-      ? parsePath({path: poster_path, size: 'w185'})
-      : defaultPoster;
-    const backdrop = backdrop_path
-      ? parsePath({path: backdrop_path, size: 'w780'})
-      : defaultPoster;
+    const poster =
+      item?.poster_path !== null
+        ? parsePath({path: item?.poster_path, size: 'w185'})
+        : defaultPoster;
+    const backdrop =
+      item?.backdrop_path !== null
+        ? parsePath({path: item?.backdrop_path, size: 'w780'})
+        : defaultPoster;
 
     function goTo() {
       navigate('Details', {
         backdrop_path: backdrop,
-        overview: overview,
+        overview: item?.overview,
         title: parsedTitle!,
-        ratings: vote_average,
-        genres: genre_ids,
+        ratings: item?.vote_average,
+        genres: item?.genre_ids,
         date: parsedDate,
-        type: media_type,
-        id: id,
+        type: item?.media_type,
+        id: item?.id,
       });
     }
 
     return (
-      <TouchableOpacity style={{marginLeft: 30}} onPress={goTo} key={id}>
+      <TouchableOpacity style={{marginLeft: 30}} onPress={goTo} key={item?.id}>
         {/* <View style={{flexDirection: 'column', marginLeft: 30}}> */}
         <CustomImage
           source={{
@@ -84,10 +88,10 @@ export const Card = memo(
           <Label>{parsedDate}</Label>
 
           <RatingsContainer>
-            <RatingsText>{vote_average?.toFixed(1)}</RatingsText>
+            <RatingsText>{item?.vote_average?.toFixed(1)}</RatingsText>
 
             <StarRating
-              value={parseRatings(vote_average || 0)}
+              value={parseRatings(item?.vote_average || 0)}
               onlyView={true}
             />
           </RatingsContainer>

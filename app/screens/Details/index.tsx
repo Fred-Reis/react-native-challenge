@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '@react-navigation/native';
@@ -36,14 +36,14 @@ const Details: React.FC<DetailsScreenProps> = ({route}) => {
     overview,
     genres,
     title,
-    date,
+    date = '',
     type,
     id,
   } = route.params;
 
   const [rating, setRating] = useState(ratings);
 
-  const {ratingTrendingList, trendingList} = useTrendingList();
+  const {ratingAllList} = useTrendingList();
 
   const {colors} = useTheme();
 
@@ -54,7 +54,7 @@ const Details: React.FC<DetailsScreenProps> = ({route}) => {
     );
     const rating =
       value === 1 && parseRatings(ratings) === value ? 0 : newRating;
-    ratingTrendingList(id, rating);
+    ratingAllList(id, rating);
   }
 
   function handleShare() {
@@ -64,8 +64,8 @@ const Details: React.FC<DetailsScreenProps> = ({route}) => {
   const labels = [
     date,
     ...allGenres[type]
-      .filter((g: {id: number}) => genres.includes(g.id))
-      .map((e: {name: any}) => e.name),
+      ?.filter((g: {id: number}) => genres.includes(g.id))
+      ?.map((e: {name: any}) => e.name),
   ]
     .slice(0, 4)
     .map((e, i, arr) => (
