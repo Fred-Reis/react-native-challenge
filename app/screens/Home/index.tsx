@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {RefreshControl, ScrollView, View} from 'react-native';
-// import LottieView from 'lottie-react-native';
+import {RefreshControl, ScrollView} from 'react-native';
 
 import {MoviesProps, PersonProps, TvShowProps} from 'services/queries/types';
 import {useSafeAreaInsetsStyle} from '/utils/useSafeAreaInsetsStyle';
@@ -23,13 +22,14 @@ import {Loading} from 'components/Loading';
 interface HomeScreenProps extends AppStackScreenProps<'Home'> {}
 
 const Home: React.FC = () => {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [tvShowsList, setTvShowsList] = useState<any[]>([]);
   const [moviesList, setMoviesList] = useState<any[]>([]);
   const [peopleList, setPeopleList] = useState<any[]>([]);
   const [activeList, setActiveList] = useState<
     'all' | 'trending' | 'person' | 'tv' | 'movie'
   >('all');
+  const [loading, setLoading] = useState(false);
 
   const inputRef = useRef('');
 
@@ -89,6 +89,7 @@ const Home: React.FC = () => {
     const type: any = ['all', 'trending'].includes(activeList)
       ? 'multi'
       : activeList;
+    setLoading(true);
     try {
       const {data} = await API.MULTI_SEARCH(type, inputRef.current!);
 
@@ -115,7 +116,10 @@ const Home: React.FC = () => {
         mapStates[type](results);
       }
       setAllList(results);
+
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
 
@@ -134,7 +138,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || loading ? (
         <Loading />
       ) : (
         <Container style={$containerInsets}>
