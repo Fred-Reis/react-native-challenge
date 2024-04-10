@@ -16,15 +16,6 @@ export const Container = styled.View`
   gap: 4px;
 `;
 
-// export const Container = styled.View`
-//   align-items: center;
-//   justify-content: center;
-//   top: 15px;
-//   gap: 4px;
-//   position: absolute;
-//   right: 85%;
-// `;
-
 export const IconText = ({focused, children}: Props) => {
   const {colors, fonts} = useTheme();
 

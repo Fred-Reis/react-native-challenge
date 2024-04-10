@@ -42,20 +42,11 @@ export const MyTabs = () => {
             <CustomTabIcon focused={focused} icon="home" text="Home" />
           ),
         }}
-        // options={{
-        //   tabBarIcon: () => (
-        //     <View style={{display: 'none', position: 'absolute'}} />
-        //   ),
-        //   // tabBarIcon: ({focused}) => (
-        //   //   <CustomTabIcon focused={focused} icon="home" text="Home" />
-        //   // ),
-        // }}
       />
       <Tab.Screen
         name="Stared"
         component={Stared}
         options={{
-          // tabBarStyle: {display: 'none'},
           tabBarIcon: ({focused}) => (
             <CustomTabIcon focused={focused} icon="star" text="Stared" />
           ),

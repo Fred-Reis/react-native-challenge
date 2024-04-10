@@ -16,8 +16,6 @@ const Stared: React.FC<StaredScreenProps> = () => {
 
   const {ratedList} = useTrendingList();
 
-  // console.log(ratedList);
-
   return (
     <Container style={$containerInsets}>
       {!ratedList.length ? (

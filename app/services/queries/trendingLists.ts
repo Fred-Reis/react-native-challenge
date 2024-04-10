@@ -4,7 +4,6 @@ import {TvShowProps} from './types';
 
 async function getAlltrends(time_window: 'day' | 'week') {
   const {data} = await API.ALL_TRENDINGS(time_window);
-  console.log('FETCH');
 
   return data;
 }

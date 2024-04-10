@@ -24,20 +24,6 @@ export type CardProps = {
 
 export const Card = memo(
   ({item}: CardProps) => {
-    // const {
-    //   backdrop_path = '',
-    //   first_air_date,
-    //   vote_average,
-    //   release_date,
-    //   poster_path,
-    //   media_type,
-    //   genre_ids,
-    //   overview,
-    //   title,
-    //   name,
-    //   id,
-    // } = item;
-
     const {navigate} = useNavigation();
 
     const isMovie = item?.media_type === 'movie';
@@ -74,7 +60,6 @@ export const Card = memo(
 
     return (
       <TouchableOpacity style={{marginLeft: 30}} onPress={goTo} key={item?.id}>
-        {/* <View style={{flexDirection: 'column', marginLeft: 30}}> */}
         <CustomImage
           source={{
             uri: poster,
@@ -96,7 +81,6 @@ export const Card = memo(
             />
           </RatingsContainer>
         </DataContainer>
-        {/* </View> */}
       </TouchableOpacity>
     );
   },
